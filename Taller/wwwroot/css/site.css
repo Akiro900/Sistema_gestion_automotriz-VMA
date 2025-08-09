@@ -1,0 +1,229 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden; /* evito scroll horizontal */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sidebar */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #1d2a3a;
+    color: white;
+    padding-top: 1rem;
+    box-sizing: border-box;
+    transition: width 0.3s ease;
+    overflow-y: auto;
+    z-index: 1050;
+}
+
+    #sidebar.collapsed {
+        width: 0;
+        overflow: hidden;
+    }
+
+/* Header */
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 30px;
+    box-sizing: border-box;
+    margin-left: 250px; /* Aquí es clave: margen igual al ancho sidebar */
+    transition: margin-left 0.3s ease;
+    z-index: 1040;
+}
+
+    #header.expanded {
+        margin-left: 0;
+    }
+
+
+/* Main */
+#main-content {
+    margin-left: 250px;
+    margin-top: 64px;
+    padding: 25px;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease;
+    flex: 1 0 auto;
+    overflow-y: auto;
+}
+
+    #main-content.expanded {
+        margin-left: 0;
+    }
+
+/* Footer */
+footer.footer {
+    flex-shrink: 0;
+    background-color: #f8f9fa;
+    padding: 15px 0;
+    border-top: 1px solid #dee2e6;
+    margin-left: 250px;
+    text-align: center;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease;
+}
+
+    footer.footer.expanded {
+        margin-left: 0;
+    }
+
+/* Botón hamburguesa */
+#btn-toggle-sidebar {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    margin-right: auto;
+    margin-left: 10px;
+}
+
+/* Sidebar links */
+#sidebar h4 {
+    margin: 0 0 1rem 0;
+    padding: 0 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+#sidebar a {
+    display: block;
+    padding: 12px 20px;
+    color: #cbd5e0;
+    text-decoration: none;
+}
+
+    #sidebar a:hover {
+        background-color: #2e4052;
+        color: #fff;
+    }
+
+/* Header user info */
+#header span {
+    margin-right: 15px;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+#header .user-photo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+}
+
+/* Contenedor del logo */
+.logo-container {
+    padding: 8px 0; /* menos padding que el p-3 */
+}
+
+/* Imagen del logo */
+.sidebar-logo {
+    max-width: 80%; /* un poco de margen lateral */
+    max-height: 50px; /* altura reducida */
+    height: auto; /* mantiene proporciones */
+    display: block;
+    margin: 0 auto; /* centrado */
+}
+
+/* Cuando el sidebar esté colapsado, hacer el logo más pequeño */
+#sidebar.collapsed .sidebar-logo {
+    max-height: 35px;
+}
+
+/* Aplica estilo a todos los enlaces del menú */
+.nav-menu a {
+    display: inline-block; /* Necesario para que el transform funcione */
+    transition: all 0.3s ease; /* Suaviza la animación */
+    text-decoration: none;
+    color: #333; /* Color de texto inicial */
+}
+
+    /* Efecto al pasar el mouse */
+    .nav-menu a:hover {
+        transform: translateX(5px); /* Mueve 5px a la derecha */
+        color: #007bff; /* Cambia de color (opcional) */
+    }
+
+/* Estilo imagen usuario para dropdown */
+#header .dropdown-toggle img.user-photo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid #e2e8f0;
+    object-fit: cover;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+    #header .dropdown-toggle img.user-photo:hover,
+    #header .dropdown-toggle:focus img.user-photo {
+        box-shadow: 0 0 8px 2px rgba(0, 123, 255, 0.6);
+    }
+
+/* Contenedor dropdown menú */
+#header .dropdown-menu {
+    min-width: 180px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 8px 20px rgba(29, 42, 58, 0.15);
+    background-color: #1d2a3a;
+    color: #cbd5e0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transform-origin: top center; /* Importante: define origen desde arriba */
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    pointer-events: none;
+}
+
+    #header .dropdown-menu.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+
+    /* Estilo de los items */
+    #header .dropdown-menu a.dropdown-item {
+        color: #cbd5e0;
+        padding: 10px 20px;
+        font-weight: 500;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+        #header .dropdown-menu a.dropdown-item:hover {
+            background-color: #2e4052;
+            color: #fff;
+        }
+
+    /* Línea divisoria */
+    #header .dropdown-menu .dropdown-divider {
+        border-top: 1px solid #394a5a;
+        margin: 8px 0;
+    }
+
+    /* Item de cerrar sesión resaltado */
+    #header .dropdown-menu a.text-danger {
+        color: #ff6b6b;
+    }
+
+        #header .dropdown-menu a.text-danger:hover {
+            background-color: #ff4c4c;
+            color: #fff;
+        }

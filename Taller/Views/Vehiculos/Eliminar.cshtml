@@ -1,0 +1,13 @@
+﻿@model Taller.Models.Vehiculo
+
+<h2>Eliminar Vehículo</h2>
+
+<div class="alert alert-warning">
+    ¿Está seguro que desea eliminar el vehículo con placa <strong>@Model.Placa</strong>?
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

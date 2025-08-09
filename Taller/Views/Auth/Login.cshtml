@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="login-card">
+    <h2>Iniciar Sesión</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@correo.com" required />
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="********" required />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        <div class="mt-3 text-center">
+            <small class="text-muted">¿No tienes cuenta? <a href="#">Regístrate</a></small>
+        </div>
+    </form>
+</div>

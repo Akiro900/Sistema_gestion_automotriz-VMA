@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Taller";
+}
+
+<h1 class="mb-4">Panel de Control - Taller</h1>
+
+<div class="row mb-4">
+    <!-- Clientes registrados -->
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Clientes Registrados</div>
+            <div class="card-body">
+                <h3 class="card-title">125</h3>
+                <p class="card-text">Clientes activos en el sistema.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehículos registrados -->
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Vehículos Registrados</div>
+            <div class="card-body">
+                <h3 class="card-title">210</h3>
+                <p class="card-text">Vehículos asociados a clientes.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Citas programadas -->
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-header">Citas Programadas</div>
+            <div class="card-body">
+                <h3 class="card-title">18</h3>
+                <p class="card-text">Servicios próximos a realizarse.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mantenimientos pendientes -->
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-header">Mantenimientos Pendientes</div>
+            <div class="card-body">
+                <h3 class="card-title">5</h3>
+                <p class="card-text">Alertas de mantenimientos próximos o atrasados.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Últimos vehículos registrados</h2>
+<table class="table table-striped table-bordered mb-5">
+    <thead class="table-dark">
+        <tr>
+            <th>Placa</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+            <th>Cliente</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>PQR123</td><td>Toyota</td><td>Corolla</td><td>2018</td><td>Juan Pérez</td></tr>
+        <tr><td>XYZ789</td><td>Honda</td><td>Civic</td><td>2020</td><td>María Gómez</td></tr>
+        <tr><td>ABC456</td><td>Ford</td><td>Focus</td><td>2017</td><td>Carlos Oviedo</td></tr>
+        <tr><td>LMN234</td><td>Chevrolet</td><td>Malibu</td><td>2019</td><td>Ana Ruiz</td></tr>
+        <tr><td>JKL567</td><td>Nissan</td><td>Sentra</td><td>2016</td><td>Pedro Sánchez</td></tr>
+    </tbody>
+</table>
+
+<h2>Próximas citas</h2>
+<table class="table table-striped table-bordered mb-5">
+    <thead class="table-dark">
+        <tr>
+            <th>Cliente</th>
+            <th>Vehículo</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Servicio</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>Juan Pérez</td><td>Toyota Corolla</td><td>2025-08-12</td><td>10:00 AM</td><td>Cambio de aceite</td></tr>
+        <tr><td>María Gómez</td><td>Honda Civic</td><td>2025-08-13</td><td>02:00 PM</td><td>Revisión general</td></tr>
+        <tr><td>Carlos Oviedo</td><td>Ford Focus</td><td>2025-08-15</td><td>09:00 AM</td><td>Frenos</td></tr>
+        <tr><td>Ana Ruiz</td><td>Chevrolet Malibu</td><td>2025-08-16</td><td>11:00 AM</td><td>Alineación</td></tr>
+        <tr><td>Pedro Sánchez</td><td>Nissan Sentra</td><td>2025-08-18</td><td>03:00 PM</td><td>Diagnóstico</td></tr>
+    </tbody>
+</table>
+
+<h2>Mantenimientos recientes</h2>
+<table class="table table-striped table-bordered mb-5">
+    <thead class="table-dark">
+        <tr>
+            <th>Vehículo</th>
+            <th>Fecha</th>
+            <th>Tipo de servicio</th>
+            <th>Mecánico</th>
+            <th>Costo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>Toyota Corolla</td><td>2025-07-30</td><td>Cambio de aceite</td><td>Juan Morales</td><td>$40</td></tr>
+        <tr><td>Honda Civic</td><td>2025-07-28</td><td>Revisión de frenos</td><td>Pedro Martínez</td><td>$60</td></tr>
+        <tr><td>Ford Focus</td><td>2025-07-25</td><td>Diagnóstico eléctrico</td><td>Luis Fernández</td><td>$70</td></tr>
+        <tr><td>Chevrolet Malibu</td><td>2025-07-22</td><td>Cambio de llantas</td><td>Carlos Jiménez</td><td>$120</td></tr>
+        <tr><td>Nissan Sentra</td><td>2025-07-20</td><td>Alineación y balanceo</td><td>Ana García</td><td>$50</td></tr>
+    </tbody>
+</table>
