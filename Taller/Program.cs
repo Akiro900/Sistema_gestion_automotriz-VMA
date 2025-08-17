@@ -11,6 +11,9 @@ builder.Services.Configure<MongoDBSettings>(
 
 builder.Services.AddSingleton<ClientesService>();
 builder.Services.AddSingleton<VehiculosService>();
+builder.Services.AddSingleton<MantenimientosService>();
+builder.Services.AddSingleton<CitasService>();
+
 
 var app = builder.Build();
 

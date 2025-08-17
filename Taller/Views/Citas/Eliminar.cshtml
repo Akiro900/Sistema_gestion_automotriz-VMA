@@ -1,0 +1,30 @@
+@model Taller.Models.Citas
+
+<h2>Eliminar Cita</h2>
+
+<h4>¿Está seguro de que desea eliminar esta cita?</h4>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">ClienteId</dt>
+        <dd class="col-sm-10">@Model.ClienteId</dd>
+
+        <dt class="col-sm-2">VehiculoId</dt>
+        <dd class="col-sm-10">@Model.VehiculoId</dd>
+
+        <dt class="col-sm-2">Servicio</dt>
+        <dd class="col-sm-10">@Model.Servicio</dd>
+
+        <dt class="col-sm-2">Fecha</dt>
+        <dd class="col-sm-10">@Model.FechaCita.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-2">Estado</dt>
+        <dd class="col-sm-10">@Model.Estado</dd>
+    </dl>
+
+    <form asp-action="Eliminar" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

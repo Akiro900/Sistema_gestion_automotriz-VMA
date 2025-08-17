@@ -1,0 +1,13 @@
+@model Taller.Models.Mantenimiento
+
+<h2>Eliminar Mantenimiento</h2>
+
+<div>
+    <p>¿Está seguro que desea eliminar el mantenimiento para el vehículo <strong>@Model.VehiculoId</strong>?</p>
+    <form asp-action="Eliminar" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
