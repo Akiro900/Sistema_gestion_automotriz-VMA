@@ -1,0 +1,21 @@
+@model Taller.Models.Empleado
+
+<h2>Eliminar Empleado</h2>
+
+<h4>¿Está seguro que desea eliminar este empleado?</h4>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Nombre:</strong> @Model.Nombre</p>
+        <p><strong>Teléfono:</strong> @Model.Telefono</p>
+        <p><strong>Correo:</strong> @Model.Correo</p>
+        <p><strong>Cargo:</strong> @Model.Cargo</p>
+    </div>
+</div>
+
+<form asp-action="Eliminar" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

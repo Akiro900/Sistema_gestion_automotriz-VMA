@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Taller.Models.Proveedores>
+
 @{
+    ViewData["Title"] = "Listado de Proveedores";
 }
+
+<h2>Listado de Proveedores</h2>
+
+<form method="get" asp-action="Index" class="mb-3 row g-3">
+    <div class="col-md-4">
+        <input type="text" name="nombre" value="@ViewData["NombreFilter"]" placeholder="Filtrar por nombre" class="form-control" />
+    </div>
+    <div class="col-md-4">
+        <input type="text" name="telefono" value="@ViewData["TelefonoFilter"]" placeholder="Filtrar por teléfono" class="form-control" />
+    </div>
+    <div class="col-md-4">
+        <input type="email" name="email" value="@ViewData["EmailFilter"]" placeholder="Filtrar por correo" class="form-control" />
+    </div>
+    <div class="col-md-12 text-end">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <a asp-action="Index" class="btn btn-secondary">Limpiar</a>
+        <a asp-action="Crear" class="btn btn-success">Nuevo Proveedor</a>
+    </div>
+</form>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Contacto</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var proveedor in Model)
+        {
+            <tr>
+                <td>@proveedor.Nombre</td>
+                <td>@proveedor.Telefono</td>
+                <td>@proveedor.Email</td>
+                <td>@proveedor.Contacto</td>
+                <td>@proveedor.Direccion</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@proveedor.Id" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Eliminar" asp-route-id="@proveedor.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

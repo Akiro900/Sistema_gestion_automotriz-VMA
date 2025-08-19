@@ -1,0 +1,21 @@
+@model Taller.Models.Inventario
+
+@{
+    ViewData["Title"] = "Eliminar Repuesto";
+}
+
+<h2>Eliminar Repuesto</h2>
+
+<h3>¿Está seguro que desea eliminar este repuesto?</h3>
+
+<div>
+    <h4>@Model.Nombre</h4>
+    <p>Cantidad: @Model.Cantidad</p>
+    <p>Precio: @Model.Precio.ToString("C")</p>
+</div>
+
+<form asp-action="Eliminar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

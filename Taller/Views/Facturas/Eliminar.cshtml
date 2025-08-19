@@ -1,0 +1,24 @@
+@model Taller.Models.Factura
+
+<h2>Eliminar Factura</h2>
+
+<h4>¿Está seguro que desea eliminar la siguiente factura?</h4>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Número de Factura:</strong> @Model.NumeroFactura</p>
+        <p><strong>Cliente ID:</strong> @Model.ClienteId</p>
+        <p><strong>Vehículo ID:</strong> @Model.VehiculoId</p>
+        <p><strong>Fecha:</strong> @Model.Fecha.ToString("dd/MM/yyyy")</p>
+        <p><strong>Monto Total:</strong> @Model.MontoTotal</p>
+        <p><strong>Descripción:</strong> @Model.Descripcion</p>
+    </div>
+</div>
+
+<form asp-action="Eliminar" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
