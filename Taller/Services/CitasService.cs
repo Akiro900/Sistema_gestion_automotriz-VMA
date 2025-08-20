@@ -21,7 +21,7 @@ namespace Taller.Services
         public async Task<List<Citas>> GetAsync() =>
             await _citasCollection.Find(_ => true).ToListAsync();
 
-        public async Task<Citas> GetAsync(string id) =>
+        public async Task<Citas> GetByIdAsync(string id) =>
             await _citasCollection.Find(c => c.Id == id).FirstOrDefaultAsync();
 
         public async Task CreateAsync(Citas cita) =>

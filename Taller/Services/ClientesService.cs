@@ -33,5 +33,11 @@ namespace Taller.Services
 
         public async Task DeleteAsync(string id) =>
             await _clientesCollection.DeleteOneAsync(c => c.Id == id);
+        
+        public async Task<Cliente> GetByCedulaAsync(string cedula)
+        {
+            return await _clientesCollection.Find(c => c.Cedula == cedula).FirstOrDefaultAsync();
+        }
+
     }
 }

@@ -10,10 +10,17 @@ namespace Taller.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        public string ClienteId { get; set; }
-        public string VehiculoId { get; set; }
+        public string ClienteId { get; set; }  //  cédula
+        public string VehiculoId { get; set; } //  placa
+
+
+        [BsonElement("Servicio")]
         public string Servicio { get; set; }
+
+        [BsonElement("FechaCita")]
         public DateTime FechaCita { get; set; }
-        public string Estado { get; set; }
+
+        [BsonElement("Estado")]
+        public string Estado { get; set; } // Ej: Pendiente, Confirmada, Cancelada
     }
 }

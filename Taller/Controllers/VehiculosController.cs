@@ -50,11 +50,28 @@ namespace Taller.Controllers
         {
             
 
-            await _vehiculosService.CreateAsync(vehiculo);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _vehiculosService.CreateAsync(vehiculo);
+
+                TempData["MensajeExito"] = "Vehiculo creado con exito";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (MongoDB.Driver.MongoWriteException ex) when (ex.WriteError.Category == MongoDB.Driver.ServerErrorCategory.DuplicateKey)
+            {
+                TempData["MensajeError"] = "Ya existe un vehiculo con esa placa.";
+                return View(vehiculo);
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = "Error al crear vehículo, verifique la informacion ingresada.";
+                return View(vehiculo);
+            }
         }
 
+
         // CU3: Editar
+        // GET: Editar
         public async Task<IActionResult> Editar(string id)
         {
             var vehiculo = await _vehiculosService.GetByIdAsync(id);
@@ -66,6 +83,7 @@ namespace Taller.Controllers
             return View(vehiculo);
         }
 
+        // POST: Editar
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(string id, Vehiculo vehiculo)
@@ -74,14 +92,37 @@ namespace Taller.Controllers
 
             if (!ModelState.IsValid)
             {
+                TempData["MensajeError"] = "Por favor corrige los errores del formulario.";
                 var clientes = await _clientesService.GetAsync();
                 ViewBag.Clientes = new SelectList(clientes, "Id", "Nombre", vehiculo.ClienteId);
                 return View(vehiculo);
             }
 
-            await _vehiculosService.UpdateAsync(id, vehiculo);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _vehiculosService.UpdateAsync(id, vehiculo);
+
+                TempData["MensajeExito"] = "Vehiculo actualizado con exito";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (MongoDB.Driver.MongoWriteException ex) when (ex.WriteError.Category == MongoDB.Driver.ServerErrorCategory.DuplicateKey)
+            {
+                TempData["MensajeError"] = "Ya existe un vehiculo con esa placa.";
+                var clientes = await _clientesService.GetAsync();
+                ViewBag.Clientes = new SelectList(clientes, "Id", "Nombre", vehiculo.ClienteId);
+                return View(vehiculo);
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = "Error al actualizar vehiculo";
+                var clientes = await _clientesService.GetAsync();
+                ViewBag.Clientes = new SelectList(clientes, "Id", "Nombre", vehiculo.ClienteId);
+                return View(vehiculo);
+            }
         }
+
+
+
 
         // CU4: Eliminar
         public async Task<IActionResult> Eliminar(string id)

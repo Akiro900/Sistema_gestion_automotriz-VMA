@@ -1,6 +1,18 @@
 ﻿@model Taller.Models.Cliente
 
 <h2>Nuevo Cliente</h2>
+<!-- Mostrar errores generales -->
+@if (TempData["MensajeError"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["MensajeError"]'
+        });
+    </script>
+}
 
 <form asp-action="Crear" method="post">
     @Html.AntiForgeryToken()
@@ -8,6 +20,11 @@
         <label asp-for="Nombre" class="form-label"></label>
         <input asp-for="Nombre" class="form-control" required />
         <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Cedula" class="form-label"></label>
+        <input asp-for="Cedula" class="form-control" required />
+        <span asp-validation-for="Cedula" class="text-danger"></span>
     </div>
 
     <div class="mb-3">

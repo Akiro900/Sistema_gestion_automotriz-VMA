@@ -2,36 +2,68 @@
 
 <h2>Editar Mantenimiento</h2>
 
+@if (TempData["MensajeError"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["MensajeError"]'
+        });
+    </script>
+}
+
 <form asp-action="Editar" method="post">
     @Html.AntiForgeryToken()
-    
+    <input type="hidden" asp-for="Id" />
+
     <div class="mb-3">
-        <label asp-for="VehiculoId" class="form-label"></label>
-        <input asp-for="VehiculoId" class="form-control" required />
-        <span asp-validation-for="VehiculoId" class="text-danger"></span>
+        <label asp-for="Placa" class="form-label"></label>
+        <input asp-for="Placa" class="form-control" required />
+        <span asp-validation-for="Placa" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Servicio" class="form-label"></label>
-        <input asp-for="Servicio" class="form-control" required />
+        <select asp-for="Servicio" asp-items="new SelectList(ViewBag.Servicios)" class="form-select" required>
+            <option value="">Seleccione un servicio</option>
+        </select>
         <span asp-validation-for="Servicio" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Fecha" class="form-label"></label>
-        <input asp-for="Fecha" type="date" class="form-control" required />
-        <span asp-validation-for="Fecha" class="text-danger"></span>
+        <label asp-for="Descripcion" class="form-label">Descripción</label>
+        <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Costo" class="form-label">Costo</label>
+        <input asp-for="Costo" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="Costo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaIngreso" class="form-label"></label>
+        <input asp-for="FechaIngreso" type="date" class="form-control" value="@Model.FechaIngreso.ToString("yyyy-MM-dd")" required />
+        <span asp-validation-for="FechaIngreso" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Estado" class="form-label"></label>
-        <input asp-for="Estado" class="form-control" required />
+        <select asp-for="Estado" class="form-select" required>
+            <option value="Pendiente" selected="@Model.Estado == " Pendiente"">Pendiente</option>
+            <option value="En Proceso" selected="@Model.Estado == " En Proceso"">En Proceso</option>
+            <option value="Finalizado" selected="@Model.Estado == " Finalizado"">Finalizado</option>
+        </select>
         <span asp-validation-for="Estado" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-success">Actualizar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>
+
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

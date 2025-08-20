@@ -7,6 +7,18 @@
 }
 
 <h2>Listado de Vehículos</h2>
+@if (TempData["MensajeExito"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '@TempData["MensajeExito"]'
+        });
+    </script>
+}
+
 
 <form method="get" asp-action="Index" class="mb-3 row g-3">
     <div class="col-md-4">

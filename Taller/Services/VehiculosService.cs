@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using System.Numerics;
 using Taller.Models;
 
 namespace Taller.Services
@@ -29,5 +30,11 @@ namespace Taller.Services
 
         public async Task DeleteAsync(string id) =>
             await _vehiculosCollection.DeleteOneAsync(v => v.Id == id);
+
+        // Devuelve un vehículo por su placa
+        public async Task<Vehiculo> GetByPlacaAsync(string placa) =>
+            await _vehiculosCollection.Find(v => v.Placa == placa).FirstOrDefaultAsync();
+
+        
     }
 }

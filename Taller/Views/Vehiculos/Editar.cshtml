@@ -1,6 +1,18 @@
 ﻿@model Taller.Models.Vehiculo
 
 <h2>Editar Vehículo</h2>
+<!-- Mostrar errores con SweetAlert2 -->
+@if (TempData["MensajeError"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["MensajeError"]'
+        });
+    </script>
+}
 
 <form asp-action="Editar" method="post">
     @Html.AntiForgeryToken()

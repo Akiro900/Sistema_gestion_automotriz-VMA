@@ -5,6 +5,17 @@
 }
 
 <h2>Listado de Mantenimientos</h2>
+@if (TempData["MensajeExito"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '@TempData["MensajeExito"]'
+        });
+    </script>
+}
 
 <form method="get" asp-action="Index" class="mb-3 row g-3">
     <div class="col-md-4">
@@ -25,7 +36,7 @@
         <tr>
             <th>Vehículo</th>
             <th>Servicio</th>
-            <th>Fecha</th>
+            <th>Fecha Ingreso</th>
             <th>Estado</th>
             <th>Acciones</th>
         </tr>
@@ -34,9 +45,9 @@
         @foreach (var mantenimiento in Model)
         {
             <tr>
-                <td>@mantenimiento.VehiculoId</td>
+                <td>@mantenimiento.Placa</td>
                 <td>@mantenimiento.Servicio</td>
-                <td>@mantenimiento.Fecha.ToString("dd/MM/yyyy")</td>
+                <td>@mantenimiento.FechaIngreso.ToString("dd/MM/yyyy")</td>
                 <td>@mantenimiento.Estado</td>
                 <td>
                     <a asp-action="Editar" asp-route-id="@mantenimiento.Id" class="btn btn-warning btn-sm">Editar</a>

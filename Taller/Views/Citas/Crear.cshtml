@@ -2,6 +2,18 @@
 
 <h2>Nueva Cita</h2>
 
+@if (TempData["MensajeError"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["MensajeError"]'
+        });
+    </script>
+}
+
 <form asp-action="Crear" method="post">
     @Html.AntiForgeryToken()
 
@@ -19,21 +31,19 @@
 
     <div class="mb-3">
         <label asp-for="Servicio" class="form-label"></label>
-        <input asp-for="Servicio" class="form-control" required />
+        <select asp-for="Servicio" asp-items="new SelectList(ViewBag.Servicios)" class="form-select" required>
+            <option value="">Seleccione un servicio</option>
+        </select>
         <span asp-validation-for="Servicio" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="FechaCita" class="form-label"></label>
-        <input asp-for="FechaCita" type="date" class="form-control" required />
+        <input asp-for="FechaCita" type="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
         <span asp-validation-for="FechaCita" class="text-danger"></span>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Estado" class="form-label"></label>
-        <input asp-for="Estado" class="form-control" required />
-        <span asp-validation-for="Estado" class="text-danger"></span>
-    </div>
+    <input type="hidden" asp-for="Estado" value="Pendiente" />
 
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
@@ -42,4 +52,3 @@
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
-

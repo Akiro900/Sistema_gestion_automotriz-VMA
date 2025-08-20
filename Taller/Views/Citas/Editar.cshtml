@@ -2,6 +2,18 @@
 
 <h2>Editar Cita</h2>
 
+@if (TempData["MensajeError"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["MensajeError"]'
+        });
+    </script>
+}
+
 <form asp-action="Editar" method="post">
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
@@ -20,23 +32,27 @@
 
     <div class="mb-3">
         <label asp-for="Servicio" class="form-label"></label>
-        <input asp-for="Servicio" class="form-control" required />
+        <select asp-for="Servicio" asp-items="new SelectList(ViewBag.Servicios)" class="form-select" required>
+            <option value="">Seleccione un servicio</option>
+        </select>
         <span asp-validation-for="Servicio" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="FechaCita" class="form-label"></label>
-        <input asp-for="FechaCita" type="date" class="form-control" required />
+        <input asp-for="FechaCita" type="date" class="form-control" value="@Model.FechaCita.ToString("yyyy-MM-dd")" required />
         <span asp-validation-for="FechaCita" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Estado" class="form-label"></label>
-        <input asp-for="Estado" class="form-control" required />
+        <select asp-for="Estado" asp-items="new SelectList(ViewBag.Estados)" class="form-select" required>
+            <option value="">Seleccione un estado</option>
+        </select>
         <span asp-validation-for="Estado" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <button type="submit" class="btn btn-success">Actualizar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>
 
