@@ -35,6 +35,14 @@ namespace Taller.Services
         public async Task<Vehiculo> GetByPlacaAsync(string placa) =>
             await _vehiculosCollection.Find(v => v.Placa == placa).FirstOrDefaultAsync();
 
-        
+        public async Task<List<Vehiculo>> GetAllAsync() =>
+    await _vehiculosCollection.Find(_ => true).ToListAsync();
+
+        // Últimos N vehículos registrados
+        public async Task<List<Vehiculo>> GetUltimosAsync(int cantidad) =>
+            await _vehiculosCollection.Find(_ => true)
+                                      .Limit(cantidad)
+                                      .ToListAsync();
+
     }
 }

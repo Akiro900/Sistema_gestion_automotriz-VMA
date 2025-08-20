@@ -7,57 +7,99 @@ namespace Taller.Controllers
 {
     public class EmpleadosController : Controller
     {
-        private readonly EmpleadosService _service;
+        private readonly EmpleadosService _empleadosService;
 
         public EmpleadosController(EmpleadosService service)
         {
-            _service = service;
+            _empleadosService = service;
         }
 
         public async Task<IActionResult> Index()
         {
-            var empleados = await _service.ObtenerTodosAsync();
+            var empleados = await _empleadosService.ObtenerTodosAsync();
             return View(empleados);
         }
 
-        // Crear
-        public IActionResult Crear() => View();
+        public IActionResult Crear()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> Crear(Empleado empleado)
         {
-            if (ModelState.IsValid)
+
+
+            
+
+            try
             {
-                await _service.CrearAsync(empleado);
-                return RedirectToAction("Index");
+                Console.WriteLine($"Intentando crear empleado: {empleado.Nombre}");
+                await _empleadosService.CrearAsync(empleado);
+                Console.WriteLine("Empleado creado exitosamente.");
+                TempData["MensajeExito"] = "Empleado creado con exito";
+                return RedirectToAction(nameof(Index));
             }
-            return View(empleado);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al crear empleado: {ex.Message}");
+                ModelState.AddModelError(string.Empty, "Error al crear empleado. Intente nuevamente.");
+                TempData["MensajeError"] = "Error al crear empleado, verifique la informacion ingresada.";
+                return View(empleado);
+            }
         }
 
-        // Editar
         public async Task<IActionResult> Editar(string id)
         {
-            var empleado = await _service.ObtenerPorIdAsync(id);
+            var empleado = await _empleadosService.ObtenerPorIdAsync(id);
             if (empleado == null) return NotFound();
             return View(empleado);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(string id, Empleado empleado)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _service.ActualizarAsync(id, empleado);
-                return RedirectToAction("Index");
+                TempData["MensajeError"] = "Por favor corrige los errores del formulario.";
+                return View(empleado);
             }
+
+            try
+            {
+                var empleadoExistente = await _empleadosService.ObtenerPorIdAsync(id);
+                if (empleadoExistente == null) return NotFound();
+
+                empleado.Id = id; // asegurar id correcto
+              
+
+                await _empleadosService.ActualizarAsync(id, empleado);
+
+                TempData["MensajeExito"] = "Empleado actualizado con exito";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = "Error al crear empleado, verifique la informacion ingresada.";
+                return View(empleado);
+            }
+        }
+
+        public async Task<IActionResult> Eliminar(string id)
+        {
+            var empleado = await _empleadosService.ObtenerPorIdAsync(id);
+            if (empleado == null) return NotFound();
             return View(empleado);
         }
 
-        // Eliminar
-        public async Task<IActionResult> Eliminar(string id)
+        [HttpPost, ActionName("Eliminar")]
+        public async Task<IActionResult> EliminarConfirmado(string id)
         {
-            await _service.EliminarAsync(id);
-            return RedirectToAction("Index");
+            await _empleadosService.EliminarAsync(id);
+            TempData["Mensaje"] = "Empleado eliminado con exito";
+            return RedirectToAction(nameof(Index));
         }
+
     }
 }

@@ -32,5 +32,17 @@ namespace Taller.Services
 
         public async Task DeleteAsync(string id) =>
             await _citasCollection.DeleteOneAsync(c => c.Id == id);
+
+        // Todas las citas pendientes
+        public async Task<List<Citas>> GetPendientesAsync() =>
+            await _citasCollection.Find(c => c.Estado == "Pendiente").ToListAsync();
+
+        // Próximas N citas
+        public async Task<List<Citas>> GetProximasAsync(int cantidad) =>
+            await _citasCollection.Find(c => c.FechaCita >= DateTime.Today)
+                                   .SortBy(c => c.FechaCita)
+                                   .Limit(cantidad)
+                                   .ToListAsync();
+
     }
 }

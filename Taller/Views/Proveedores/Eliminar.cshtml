@@ -1,19 +1,8 @@
-@model Taller.Models.Empleado
+﻿@model Taller.Models.Proveedores
 
-<h2>Eliminar Empleado</h2>
-@if (TempData["MensajeExito"] != null)
-{
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Éxito',
-            text: '@TempData["MensajeExito"]'
-        });
-    </script>
-}
+<h2>Eliminar Proveedor</h2>
 
-<h4>¿Está seguro que desea eliminar este Empleado?</h4>
+<h4>¿Está seguro que desea eliminar este proveedor?</h4>
 
 <div>
     <dl class="row">
@@ -29,8 +18,8 @@
         <dt class="col-sm-2">Correo</dt>
         <dd class="col-sm-10">@Model.Correo</dd>
 
-        <dt class="col-sm-2">Cargo</dt>
-        <dd class="col-sm-10">@Model.Cargo</dd>
+        <dt class="col-sm-2">Dirección</dt>
+        <dd class="col-sm-10">@Model.Direccion</dd>
     </dl>
 </div>
 

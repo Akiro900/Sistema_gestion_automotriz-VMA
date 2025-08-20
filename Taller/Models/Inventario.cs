@@ -20,6 +20,7 @@ namespace Taller.Models
         public int Cantidad { get; set; }
 
         [Required(ErrorMessage = "El precio es obligatorio")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor a 0")]
         [DataType(DataType.Currency)]
         public decimal Precio { get; set; }
 

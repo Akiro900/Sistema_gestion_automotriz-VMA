@@ -18,19 +18,20 @@ namespace Taller.Services
             _inventarioCollection = database.GetCollection<Inventario>("inventario");
         }
 
-        public async Task<List<Inventario>> ObtenerTodosAsync() =>
+        public async Task<List<Inventario>> GetAsync() =>
             await _inventarioCollection.Find(_ => true).ToListAsync();
 
-        public async Task<Inventario> ObtenerPorIdAsync(string id) =>
-            await _inventarioCollection.Find(i => i.Id == id).FirstOrDefaultAsync();
+        public async Task<Inventario> GetAsync(string id) =>
+            await _inventarioCollection.Find(c => c.Id == id).FirstOrDefaultAsync();
 
-        public async Task CrearAsync(Inventario inventario) =>
+        public async Task CreateAsync(Inventario inventario) =>
             await _inventarioCollection.InsertOneAsync(inventario);
 
-        public async Task ActualizarAsync(string id, Inventario inventario) =>
-            await _inventarioCollection.ReplaceOneAsync(i => i.Id == id, inventario);
 
-        public async Task EliminarAsync(string id) =>
-            await _inventarioCollection.DeleteOneAsync(i => i.Id == id);
+        public async Task UpdateAsync(string id, Inventario inventario) =>
+            await _inventarioCollection.ReplaceOneAsync(c => c.Id == id, inventario);
+
+        public async Task DeleteAsync(string id) =>
+            await _inventarioCollection.DeleteOneAsync(c => c.Id == id);
     }
 }

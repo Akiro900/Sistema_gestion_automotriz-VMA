@@ -1,81 +1,112 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 using Taller.Models;
 using Taller.Services;
-using System.Threading.Tasks;
 
 namespace Taller.Controllers
 {
     public class FacturasController : Controller
     {
-        private readonly FacturasService _service;
+        private readonly FacturasService _facturasService;
+        private readonly ClientesService _clientesService;
+        private readonly VehiculosService _vehiculosService;
 
-        public FacturasController(FacturasService service)
+        public FacturasController(FacturasService facturasService, ClientesService clientesService, VehiculosService vehiculosService)
         {
-            _service = service;
+            _facturasService = facturasService;
+            _clientesService = clientesService;
+            _vehiculosService = vehiculosService;
         }
 
-        // Listar facturas
+        // GET: Index
         public async Task<IActionResult> Index()
         {
-            var facturas = await _service.GetAsync();
+            var facturas = await _facturasService.GetAsync();
             return View(facturas);
         }
 
-        // Crear factura
-        public IActionResult Crear()
-        {
-            return View();
-        }
 
-        [HttpPost]
-        public async Task<IActionResult> Crear(Factura factura)
+        // GET: Crear
+        public async Task<IActionResult> Crear()
         {
-            if (ModelState.IsValid)
+            var random = Path.GetRandomFileName().Replace(".", "").Substring(0, 5).ToUpper();
+            var numeroFactura = $"FACT-{DateTime.Now:yyyyMMdd}-{random}";
+
+            var factura = new Factura
             {
-                await _service.CreateAsync(factura);
-                return RedirectToAction("Index");
-            }
+                Fecha = DateTime.Today,
+                NumeroFactura = numeroFactura
+            };
+
             return View(factura);
         }
 
-        // Editar factura
-        public async Task<IActionResult> Editar(string id)
-        {
-            var factura = await _service.GetAsync(id);
-            if (factura == null) return NotFound();
-            return View(factura);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Editar(string id, Factura factura)
-        {
-            if (ModelState.IsValid)
-            {
-                await _service.UpdateAsync(id, factura);
-                return RedirectToAction("Index");
-            }
-            return View(factura);
-        }
-
-        // Eliminar factura
-        public async Task<IActionResult> Eliminar(string id)
-        {
-            var factura = await _service.GetAsync(id);
-            if (factura == null) return NotFound();
-
-            await _service.DeleteAsync(id);
-            return RedirectToAction("Index");
-        }
-
+        // POST: Crear
         [HttpPost]
         [ValidateAntiForgeryToken]
-public async Task<IActionResult> Eliminar(string id, Factura factura)
-{
-    if (id != factura.Id) return BadRequest();
+        public async Task<IActionResult> Crear(Factura factura)
+        {
+            
 
-    await _service.DeleteAsync(id);
-    return RedirectToAction("Index");
-}
+
+
+            // Validar cliente
+            var cliente = await _clientesService.GetByCedulaAsync(factura.ClienteId);
+            if (cliente == null)
+            {
+                TempData["MensajeError"] = "La cedula ingresada no existe en la base de datos.";
+                return View(factura);
+            }
+
+            // Validar vehículo
+            var vehiculo = await _vehiculosService.GetByPlacaAsync(factura.VehiculoId);
+            if (vehiculo == null)
+            {
+                TempData["MensajeError"] = "La placa ingresada no existe en la base de datos.";
+                return View(factura);
+            }
+
+            if (factura.Fecha != DateTime.Today)
+            {
+                TempData["MensajeError"] = "La fecha de la factura debe ser igual al dia actual.";
+                return View(factura);
+            }
+
+
+            try
+            {
+                
+                await _facturasService.CreateAsync(factura);
+                TempData["MensajeExito"] = "Factura creada con exito";
+                Console.WriteLine("Factura creada exitosamente");
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al crear la factura: {ex.Message}");
+                TempData["MensajeError"] = "Error al crear la factura, verifique los datos ingresados. ";
+                return View(factura);
+            }
+        }
+
+        // GET: Eliminar
+        public async Task<IActionResult> Eliminar(string id)
+        {
+            var factura = await _facturasService.GetByIdAsync(id);
+            if (factura == null) return NotFound();
+            return View(factura);
+        }
+
+        // POST: Eliminar
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EliminarConfirmed(string id)
+        {
+            await _facturasService.DeleteAsync(id);
+            TempData["MensajeExito"] = "Factura eliminada con exito";
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

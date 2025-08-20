@@ -14,6 +14,11 @@ namespace Taller.Models
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
+        [BsonElement("Cedula")]
+        [Required(ErrorMessage = "La cedula es obligatoria")]
+        [StringLength(9, ErrorMessage = "La cedula no puede superar los 9 caracteres")]
+        public string Cedula { get; set; }
+
         [Required]
         [Display(Name = "Teléfono")]
         public string Telefono { get; set; }

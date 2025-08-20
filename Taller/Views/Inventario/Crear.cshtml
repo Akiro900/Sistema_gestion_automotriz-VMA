@@ -1,40 +1,54 @@
 @model Taller.Models.Inventario
 
-@{
-    ViewData["Title"] = "Agregar Repuesto";
+<h2>Nuevo Inventario</h2>
+
+@if (TempData["MensajeError"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["MensajeError"]'
+        });
+    </script>
 }
 
-<h2>Agregar Repuesto</h2>
-
 <form asp-action="Crear" method="post">
-    <div class="form-group">
-        <label asp-for="Nombre"></label>
-        <input asp-for="Nombre" class="form-control" />
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" required />
         <span asp-validation-for="Nombre" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Cantidad"></label>
-        <input asp-for="Cantidad" class="form-control" />
+    <div class="mb-3">
+        <label asp-for="Cantidad" class="form-label"></label>
+        <input asp-for="Cantidad" class="form-control" required />
         <span asp-validation-for="Cantidad" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Precio"></label>
-        <input asp-for="Precio" class="form-control" />
+    <div class="mb-3">
+        <label asp-for="Precio" class="form-label"></label>
+        <input asp-for="Precio" class="form-control" required />
         <span asp-validation-for="Precio" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="FechaIngreso"></label>
-        <input asp-for="FechaIngreso" class="form-control" type="date" />
+    
+
+    <div class="mb-3">
+        <label asp-for="FechaIngreso" class="form-label"></label>
+        <input asp-for="FechaIngreso" type="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
         <span asp-validation-for="FechaIngreso" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">Guardar</button>
+    
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

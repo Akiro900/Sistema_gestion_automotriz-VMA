@@ -39,5 +39,9 @@ namespace Taller.Services
             return await _clientesCollection.Find(c => c.Cedula == cedula).FirstOrDefaultAsync();
         }
 
+        public async Task<List<Cliente>> GetAllAsync() =>
+    await _clientesCollection.Find(_ => true).ToListAsync();
+
+
     }
 }

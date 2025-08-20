@@ -17,8 +17,7 @@ builder.Services.AddSingleton<ProveedoresService>();
 builder.Services.AddSingleton<EmpleadosService>();
 builder.Services.AddSingleton<FacturasService>();
 builder.Services.AddSingleton<InventarioService>();
-builder.Services.AddSingleton<ServiciosService>();
-builder.Services.AddSingleton<PagosService>();
+
 
 
 var app = builder.Build();

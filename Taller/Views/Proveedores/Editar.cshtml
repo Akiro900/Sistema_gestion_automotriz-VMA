@@ -1,15 +1,31 @@
 @model Taller.Models.Proveedores
 
-<h2>Editar Proveedor</h2>
+<h2>Editar Proveedores</h2>
+<!-- Popup de error -->
+@if (TempData["MensajeError"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@TempData["MensajeError"]'
+        });
+    </script>
+}
 
 <form asp-action="Editar" method="post">
-    @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
 
     <div class="mb-3">
         <label asp-for="Nombre" class="form-label"></label>
         <input asp-for="Nombre" class="form-control" required />
         <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Cedula" class="form-label"></label>
+        <input asp-for="Cedula" class="form-control" required />
+        <span asp-validation-for="Cedula" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
@@ -19,27 +35,23 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" type="email" class="form-control" required />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Contacto" class="form-label"></label>
-        <input asp-for="Contacto" class="form-control" />
-        <span asp-validation-for="Contacto" class="text-danger"></span>
+        <label asp-for="Correo" class="form-label"></label>
+        <input asp-for="Correo" type="email" class="form-control" required />
+        <span asp-validation-for="Correo" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Direccion" class="form-label"></label>
-        <input asp-for="Direccion" class="form-control" />
+        <input asp-for="Direccion" class="form-control" required />
         <span asp-validation-for="Direccion" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-    <a asp-action="Listar" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

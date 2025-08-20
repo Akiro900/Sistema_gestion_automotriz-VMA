@@ -5,16 +5,31 @@
 }
 
 <h2>Listado de Proveedores</h2>
+<!-- Popup de éxito -->
+@if (TempData["MensajeExito"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '@TempData["MensajeExito"]'
+        });
+    </script>
+}
 
 <form method="get" asp-action="Index" class="mb-3 row g-3">
     <div class="col-md-4">
         <input type="text" name="nombre" value="@ViewData["NombreFilter"]" placeholder="Filtrar por nombre" class="form-control" />
     </div>
     <div class="col-md-4">
+        <input type="text" name="cedula" value="@ViewData["CedulaFilter"]" placeholder="Filtrar por cedula" class="form-control" />
+    </div>
+    <div class="col-md-4">
         <input type="text" name="telefono" value="@ViewData["TelefonoFilter"]" placeholder="Filtrar por teléfono" class="form-control" />
     </div>
     <div class="col-md-4">
-        <input type="email" name="email" value="@ViewData["EmailFilter"]" placeholder="Filtrar por correo" class="form-control" />
+        <input type="email" name="correo" value="@ViewData["CorreoFilter"]" placeholder="Filtrar por correo" class="form-control" />
     </div>
     <div class="col-md-12 text-end">
         <button type="submit" class="btn btn-primary">Filtrar</button>
@@ -27,28 +42,33 @@
     <thead class="table-dark">
         <tr>
             <th>Nombre</th>
+            <th>Cedula</th>
             <th>Teléfono</th>
             <th>Correo</th>
-            <th>Contacto</th>
             <th>Dirección</th>
+            <th>Fecha de Registro</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var proveedor in Model)
+        @foreach (var cliente in Model)
         {
             <tr>
-                <td>@proveedor.Nombre</td>
-                <td>@proveedor.Telefono</td>
-                <td>@proveedor.Email</td>
-                <td>@proveedor.Contacto</td>
-                <td>@proveedor.Direccion</td>
+                <td>@cliente.Nombre</td>
+                <td>@cliente.Cedula</td>
+                <td>@cliente.Telefono</td>
+                <td>@cliente.Correo</td>
+                <td>@cliente.Direccion</td>
+                <td>@cliente.FechaRegistro.ToString("dd/MM/yyyy")</td>
                 <td>
-                    <a asp-action="Editar" asp-route-id="@proveedor.Id" class="btn btn-warning btn-sm">Editar</a>
-                    <a asp-action="Eliminar" asp-route-id="@proveedor.Id" class="btn btn-danger btn-sm">Eliminar</a>
+
+                    <a asp-action="Editar" asp-route-id="@cliente.Id" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Eliminar" asp-route-id="@cliente.Id" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+
 

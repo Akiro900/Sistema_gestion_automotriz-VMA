@@ -38,5 +38,17 @@ namespace Taller.Services
         // Eliminar mantenimiento
         public async Task DeleteAsync(string id) =>
             await _mantenimientosCollection.DeleteOneAsync(m => m.Id == id);
+
+        // Mantenimientos pendientes
+        public async Task<List<Mantenimiento>> GetPendientesAsync() =>
+            await _mantenimientosCollection.Find(m => m.Estado != "Finalizado").ToListAsync();
+
+        // Últimos N mantenimientos realizados
+        public async Task<List<Mantenimiento>> GetRecientesAsync(int cantidad) =>
+            await _mantenimientosCollection.Find(_ => true)
+                                            .SortByDescending(m => m.FechaIngreso)
+                                            .Limit(cantidad)
+                                            .ToListAsync();
+
     }
 }

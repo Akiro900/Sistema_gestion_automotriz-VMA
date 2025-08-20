@@ -1,10 +1,26 @@
 ﻿@model IEnumerable<Taller.Models.Inventario>
 
+@{
+    ViewData["Title"] = "Listado de Inventario";
+}
+
 <h2>Listado de Inventario</h2>
+<!-- Popup de éxito -->
+@if (TempData["MensajeExito"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '@TempData["MensajeExito"]'
+        });
+    </script>
+}
 
 <form method="get" asp-action="Index" class="mb-3 row g-3">
     <div class="col-md-4">
-        <input type="text" name="clienteId" value="@ViewData["ClienteFilter"]" placeholder="Filtrar por Pieza" class="form-control" />
+        <input type="text" name="clienteId" value="@ViewData["ClienteFilter"]" placeholder="Filtrar por Cédula" class="form-control" />
     </div>
     <div class="col-md-4">
         <input type="text" name="estado" value="@ViewData["EstadoFilter"]" placeholder="Filtrar por Estado" class="form-control" />
@@ -22,21 +38,22 @@
             <th>Nombre</th>
             <th>Cantidad</th>
             <th>Precio</th>
-            <th>Fecha Ingreso</th>
+            <th>Fecha</th>      
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var inventario in Model)
         {
             <tr>
-                <td>@item.Nombre</td>
-                <td>@item.Cantidad</td>
-                <td>@item.Precio.ToString("C")</td>
-                <td>@item.FechaIngreso.ToString("dd/MM/yyyy")</td>
+                <td>@inventario.Nombre</td>
+                <td>@inventario.Cantidad</td>
+                <td>@inventario.Precio</td>
+                <td>@inventario.FechaIngreso.ToString("dd/MM/yyyy")</td>
+                
                 <td>
-                    <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
-                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                    <a asp-action="Editar" asp-route-id="@inventario.Id" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Eliminar" asp-route-id="@inventario.Id" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>
             </tr>
         }

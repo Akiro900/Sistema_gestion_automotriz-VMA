@@ -21,7 +21,9 @@ namespace Taller.Services
         public async Task<List<Factura>> GetAsync() =>
             await _facturasCollection.Find(_ => true).ToListAsync();
 
-        public async Task<Factura> GetAsync(string id) =>
+        
+
+        public async Task<Factura> GetByIdAsync(string id) =>
             await _facturasCollection.Find(f => f.Id == id).FirstOrDefaultAsync();
 
         public async Task CreateAsync(Factura factura) =>
